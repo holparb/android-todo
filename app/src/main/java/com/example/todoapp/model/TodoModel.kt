@@ -11,6 +11,6 @@ enum class ItemPriority(val color: Color) {
 data class TodoModel(
     val id: Int,
     val title: String,
-    val subTitle: String,
+    val description: String,
     val priority: ItemPriority
 )
