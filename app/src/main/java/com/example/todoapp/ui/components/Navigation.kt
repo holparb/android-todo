@@ -4,7 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.todoapp.ui.components.create_item.CreateTodo
+import com.example.todoapp.ui.components.screens.MainScreen
+import com.example.todoapp.ui.components.screens.CreateTodoScreen
 import kotlinx.serialization.Serializable
 
 @Composable
@@ -14,8 +15,8 @@ fun Navigation() {
         composable<MainScreen> {
             MainScreen(navController = navController)
         }
-        composable<CreateTodo> {
-            CreateTodo()
+        composable<CreateTodoScreen> {
+            CreateTodoScreen()
         }
     }
 }
@@ -24,4 +25,4 @@ fun Navigation() {
 object MainScreen
 
 @Serializable
-object CreateTodo
+object CreateTodoScreen
