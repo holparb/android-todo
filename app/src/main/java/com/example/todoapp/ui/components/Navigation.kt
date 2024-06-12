@@ -1,24 +1,44 @@
 package com.example.todoapp.ui.components
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.todoapp.ui.components.screens.MainScreen
 import com.example.todoapp.ui.components.screens.CreateTodoScreen
+import com.example.todoapp.viewmodels.TodoViewModel
 import kotlinx.serialization.Serializable
 
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = MainScreen ) {
-        composable<MainScreen> {
+        composable<MainScreen> {entry ->
+            val viewModel = entry.sharedViewModel<TodoViewModel>(navController)
             MainScreen(navController = navController)
         }
-        composable<CreateTodoScreen> {
+        composable<CreateTodoScreen> {entry ->
+            val viewModel = entry.sharedViewModel<TodoViewModel>(navController)
             CreateTodoScreen()
         }
     }
+}
+
+@Composable
+inline fun <reified T : ViewModel> NavBackStackEntry.sharedViewModel(
+    navController: NavHostController
+) : T {
+    val navGraphRoute = destination.parent?.route ?: return viewModel()
+    val parentEntry = remember(this) {
+        navController.getBackStackEntry(navGraphRoute)
+    }
+    return viewModel(parentEntry)
 }
 
 @Serializable
