@@ -7,13 +7,12 @@ import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.todoapp.ui.components.screens.MainScreen
 import com.example.todoapp.ui.components.screens.CreateTodoScreen
+import com.example.todoapp.ui.components.screens.MainScreen
 import com.example.todoapp.viewmodels.TodoViewModel
 import kotlinx.serialization.Serializable
 

@@ -1,6 +1,5 @@
 package com.example.todoapp.ui.components.screens
 
-import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -11,7 +10,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.todoapp.model.TodoModel
 import com.example.todoapp.ui.components.create_item.CreateTodo
-import com.example.todoapp.viewmodels.TodoState
 
 @Composable
 fun CreateTodoScreen(
