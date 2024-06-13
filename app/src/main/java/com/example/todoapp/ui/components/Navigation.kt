@@ -1,6 +1,8 @@
 package com.example.todoapp.ui.components
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -16,16 +18,23 @@ import com.example.todoapp.viewmodels.TodoViewModel
 import kotlinx.serialization.Serializable
 
 @Composable
-fun Navigation() {
+fun Navigation(
+    viewModel: TodoViewModel
+) {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = MainScreen ) {
-        composable<MainScreen> {entry ->
-            val viewModel = entry.sharedViewModel<TodoViewModel>(navController)
-            MainScreen(navController = navController)
+        composable<MainScreen> {
+            val state by viewModel.state.collectAsState()
+            MainScreen(
+                navController = navController,
+                state = state
+            )
         }
-        composable<CreateTodoScreen> {entry ->
-            val viewModel = entry.sharedViewModel<TodoViewModel>(navController)
-            CreateTodoScreen()
+        composable<CreateTodoScreen> {
+            CreateTodoScreen(
+                navController = navController,
+                onAddTodo = { viewModel.addTodo(it) }
+            )
         }
     }
 }

@@ -35,12 +35,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.todoapp.model.ItemPriority
 import com.example.todoapp.model.TodoModel
+import com.example.todoapp.ui.components.MainScreen
 
 @Composable
 fun CreateTodo(
-    onSaveTodo: (TodoModel) -> Unit,
+    navController: NavController,
+    onAddTodo: (TodoModel) -> Unit,
     paddingValues: PaddingValues,
 ) {
     var title by remember {
@@ -87,7 +91,10 @@ fun CreateTodo(
             modifier = Modifier.fillMaxWidth().wrapContentHeight(Alignment.Bottom).weight(4f)
         ) {
             FloatingActionButton(
-                onClick = { onSaveTodo(TodoModel(1, title, description, priority)) }
+                onClick = {
+                    onAddTodo(TodoModel(1, title, description, priority))
+                    navController.navigate(MainScreen)
+                }
             ) {
                 Icon(
                     imageVector = Icons.Filled.Done,
@@ -101,5 +108,5 @@ fun CreateTodo(
 @Preview
 @Composable
 private fun CreateTodoPreview() {
-    CreateTodo({}, PaddingValues(16.dp))
+    CreateTodo(rememberNavController(), {}, PaddingValues(16.dp))
 }

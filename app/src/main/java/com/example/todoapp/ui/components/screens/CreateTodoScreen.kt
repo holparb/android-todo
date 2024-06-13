@@ -7,24 +7,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.todoapp.model.TodoModel
 import com.example.todoapp.ui.components.create_item.CreateTodo
+import com.example.todoapp.viewmodels.TodoState
 
 @Composable
-fun CreateTodoScreen() {
+fun CreateTodoScreen(
+    navController: NavController,
+    onAddTodo: (TodoModel) -> Unit
+) {
     Scaffold (
         modifier = Modifier.padding(16.dp),
     ) { paddingValues ->
-        CreateTodo({ onSaveTodo(it) }, paddingValues)
+        CreateTodo(navController, { onAddTodo(it) }, paddingValues)
     }
-}
-
-fun onSaveTodo(todo: TodoModel) {
-    Log.d("CreateTodoScreen", todo.toString());
 }
 
 @Preview
 @Composable
 private fun CreateTodoScreenPreview() {
-    CreateTodoScreen()
+    CreateTodoScreen(rememberNavController(), {})
 }
