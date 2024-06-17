@@ -4,13 +4,18 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,7 +31,8 @@ import com.example.todoapp.ui.theme.TodoAppTheme
 
 @Composable
 fun TodoListItem(
-    item : TodoModel
+    item : TodoModel,
+    onDeleteTodo: (TodoModel) -> Unit,
 ) {
     Card (
         modifier = Modifier.fillMaxWidth(),
@@ -45,15 +51,27 @@ fun TodoListItem(
                 modifier = Modifier
                     .width(60.dp)
                     .height(60.dp)
+                    .weight(2f)
             ) {
                 drawCircle(
                     color = item.priority.color,
                     radius = size.minDimension / 4
                 )
             }
-            Column(modifier = Modifier.fillMaxWidth()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(4f)
+            ) {
                 Text(text = item.title)
                 Text(text = item.description)
+            }
+            Spacer(modifier = Modifier.width(12.dp))
+            IconButton(
+                modifier = Modifier.weight(1f),
+                onClick = { onDeleteTodo(item) }
+            ) {
+                Icon(Icons.Default.Delete, "Delete")
             }
         }
     }
@@ -70,6 +88,6 @@ private fun TodoItemPreview(
     @PreviewParameter(provider = PriorityParameterProvider::class) priority: ItemPriority
 ) {
     TodoAppTheme {
-        TodoListItem(TodoModel(id = 10, title = "Title", description = "SubTitle", priority = priority))
+        TodoListItem(TodoModel(id = 10, title = "Title", description = "SubTitle", priority = priority), {})
     }
 }

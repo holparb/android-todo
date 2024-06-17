@@ -20,4 +20,10 @@ class TodoViewModel: ViewModel() {
             currentState.copy(todos = currentState.todos.plus(todo))
         }
     }
+
+    fun removeTodo(todo: TodoModel) {
+        _state.update { currentState ->
+            currentState.copy(todos = currentState.todos.minus(todo))
+        }
+    }
 }

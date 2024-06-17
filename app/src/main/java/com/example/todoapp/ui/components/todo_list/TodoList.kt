@@ -15,6 +15,7 @@ import com.example.todoapp.model.TodoModel
 @Composable
 fun TodoList(
     todos: List<TodoModel>,
+    onDeleteTodo: (TodoModel) -> Unit,
     paddingValues: PaddingValues
 ) {
     LazyColumn (
@@ -24,7 +25,7 @@ fun TodoList(
     )
     {
         items(todos) { item: TodoModel ->
-            TodoListItem(item)
+            TodoListItem(item, onDeleteTodo)
         }
     }
 }
@@ -33,5 +34,5 @@ fun TodoList(
 @Composable
 private fun TodoListPreview() {
     val items: List<TodoModel> = listOf(TodoModel(10, "Title", "Subtitle", ItemPriority.LOW), TodoModel(10, "Title", "Subtitle", ItemPriority.MID), TodoModel(10, "Title", "Subtitle", ItemPriority.HIGH))
-    TodoList(items, PaddingValues(16.dp))
+    TodoList(items, {}, PaddingValues(16.dp))
 }

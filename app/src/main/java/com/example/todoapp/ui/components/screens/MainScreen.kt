@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.todoapp.model.TodoModel
 import com.example.todoapp.ui.components.CreateTodoScreen
 import com.example.todoapp.ui.components.todo_list.TodoList
 import com.example.todoapp.viewmodels.TodoState
@@ -17,7 +18,8 @@ import com.example.todoapp.viewmodels.TodoState
 @Composable
 fun MainScreen(
     navController: NavController,
-    state: TodoState
+    state: TodoState,
+    onDeleteTodo: (TodoModel) -> Unit
 ) {
     Scaffold(
         floatingActionButton = {
@@ -29,6 +31,6 @@ fun MainScreen(
         },
         modifier = Modifier.padding(16.dp)
     ) { paddingValues ->
-        TodoList(todos = state.todos, paddingValues = paddingValues)
+        TodoList(todos = state.todos, onDeleteTodo, paddingValues = paddingValues)
     }
 }

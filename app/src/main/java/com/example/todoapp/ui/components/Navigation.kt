@@ -26,7 +26,8 @@ fun Navigation(
             val state by viewModel.state.collectAsState()
             MainScreen(
                 navController = navController,
-                state = state
+                state = state,
+                onDeleteTodo = { viewModel.removeTodo(it) }
             )
         }
         composable<CreateTodoScreen> {
