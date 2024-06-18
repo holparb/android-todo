@@ -28,11 +28,12 @@ import androidx.compose.ui.unit.dp
 import com.example.todoapp.model.ItemPriority
 import com.example.todoapp.model.TodoModel
 import com.example.todoapp.ui.theme.TodoAppTheme
+import com.example.todoapp.viewmodels.TodoEvent
 
 @Composable
 fun TodoListItem(
     item : TodoModel,
-    onDeleteTodo: (TodoModel) -> Unit,
+    onEvent: (TodoEvent) -> Unit
 ) {
     Card (
         modifier = Modifier.fillMaxWidth(),
@@ -69,7 +70,7 @@ fun TodoListItem(
             Spacer(modifier = Modifier.width(12.dp))
             IconButton(
                 modifier = Modifier.weight(1f),
-                onClick = { onDeleteTodo(item) }
+                onClick = { onEvent(TodoEvent.DeleteTodo(item)) }
             ) {
                 Icon(Icons.Default.Delete, "Delete")
             }

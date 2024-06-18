@@ -27,13 +27,15 @@ fun Navigation(
             MainScreen(
                 navController = navController,
                 state = state,
-                onDeleteTodo = { viewModel.removeTodo(it) }
+                onEvent = viewModel::onEvent
             )
         }
         composable<CreateTodoScreen> {
+            val state by viewModel.state.collectAsState()
             CreateTodoScreen(
                 navController = navController,
-                onAddTodo = { viewModel.addTodo(it) }
+                state = state,
+                onEvent = viewModel::onEvent
             )
         }
     }

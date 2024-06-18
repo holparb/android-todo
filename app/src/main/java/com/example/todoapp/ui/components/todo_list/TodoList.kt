@@ -11,11 +11,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.todoapp.model.ItemPriority
 import com.example.todoapp.model.TodoModel
+import com.example.todoapp.viewmodels.TodoEvent
 
 @Composable
 fun TodoList(
     todos: List<TodoModel>,
-    onDeleteTodo: (TodoModel) -> Unit,
+    onEvent: (TodoEvent) -> Unit,
     paddingValues: PaddingValues
 ) {
     LazyColumn (
@@ -25,7 +26,7 @@ fun TodoList(
     )
     {
         items(todos) { item: TodoModel ->
-            TodoListItem(item, onDeleteTodo)
+            TodoListItem(item, onEvent)
         }
     }
 }
@@ -33,6 +34,6 @@ fun TodoList(
 @Preview
 @Composable
 private fun TodoListPreview() {
-    val items: List<TodoModel> = listOf(TodoModel(10, "Title", "Subtitle", ItemPriority.LOW), TodoModel(10, "Title", "Subtitle", ItemPriority.MID), TodoModel(10, "Title", "Subtitle", ItemPriority.HIGH))
+    val items: List<TodoModel> = listOf(TodoModel("Title", "Subtitle", ItemPriority.LOW), TodoModel("Title", "Subtitle", ItemPriority.MID), TodoModel("Title", "Subtitle", ItemPriority.HIGH))
     TodoList(items, {}, PaddingValues(16.dp))
 }

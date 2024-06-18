@@ -1,6 +1,8 @@
 package com.example.todoapp.model
 
 import androidx.compose.ui.graphics.Color
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 enum class ItemPriority(val color: Color) {
     LOW(Color.Green),
@@ -8,9 +10,11 @@ enum class ItemPriority(val color: Color) {
     HIGH(Color.Red)
 }
 
+@Entity(tableName = "todo")
 data class TodoModel(
-    val id: Int,
     val title: String,
     val description: String,
-    val priority: ItemPriority
+    val priority: ItemPriority,
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
 )

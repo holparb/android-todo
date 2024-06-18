@@ -17,37 +17,23 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.todoapp.model.ItemPriority
-import com.example.todoapp.model.TodoModel
 import com.example.todoapp.ui.components.MainScreen
+import com.example.todoapp.viewmodels.TodoEvent
+import com.example.todoapp.viewmodels.TodoState
 
 @Composable
 fun CreateTodo(
     navController: NavController,
-    onAddTodo: (TodoModel) -> Unit,
+    state: TodoState,
+    onEvent: (TodoEvent) -> Unit,
     paddingValues: PaddingValues,
 ) {
-    var title by remember {
-        mutableStateOf("")
-    }
-
-    var description by remember {
-        mutableStateOf("")
-    }
-
-    var priority by remember {
-        mutableStateOf(ItemPriority.LOW)
-    }
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -56,22 +42,20 @@ fun CreateTodo(
     ) {
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
-            value = title,
-            onValueChange = { title = it },
+            value = state.title,
+            onValueChange = { onEvent(TodoEvent.SetTitle(it)) },
             label = { Text("Title") }
         )
         Spacer(modifier = Modifier.height(16.dp))
         PriorityDropdown(
-            priority = priority,
-            onPrioritySelected = {selectedPriority ->
-                priority = selectedPriority
-            }
+            priority = state.priority,
+            onPrioritySelected = { onEvent(TodoEvent.SetPriority(it)) }
         )
         Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth().weight(3f),
-            value = description,
-            onValueChange = { description = it },
+            value = state.description,
+            onValueChange = { onEvent(TodoEvent.SetDescription(it)) },
             label = { Text("Description") }
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -82,7 +66,7 @@ fun CreateTodo(
         ) {
             FloatingActionButton(
                 onClick = {
-                    onAddTodo(TodoModel(1, title, description, priority))
+                    onEvent(TodoEvent.SaveTodo)
                     navController.navigate(MainScreen)
                 }
             ) {
@@ -98,5 +82,5 @@ fun CreateTodo(
 @Preview
 @Composable
 private fun CreateTodoPreview() {
-    CreateTodo(rememberNavController(), {}, PaddingValues(16.dp))
+    CreateTodo(rememberNavController(), TodoState(), {}, paddingValues = PaddingValues(16.dp))
 }
